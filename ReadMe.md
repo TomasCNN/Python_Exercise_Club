@@ -150,3 +150,225 @@ arithmetic_arranger(["32 + 8", "1 - 3801", "9999 + 9999", "523 - 49"], True)
 复制项目的URL并提交到freeCodeCamp。
 
  
+
+## 练习题1_题解
+
+Exercise_1.py如下所示：
+
+```python
+# This entrypoint file to be used in development. Start by reading README.md
+from tkinter import TRUE
+from arithmetic_arranger import arithmetic_arranger
+from unittest import main
+
+
+print(arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"],TRUE))
+
+
+# Run unit tests automatically
+main(module='test_module', exit=False)
+```
+
+arithmetic_arranger.py如下所示：
+
+```python
+def arithmetic_arranger(problems, val=False):
+    arranged_problems = ''
+    if len(problems) > 5:
+        arranged_problems = "Error: Too many problems."
+        return arranged_problems
+
+    # list of all operations in str format
+    operations = list(map(lambda x: x.split()[1], problems))
+    if set(operations) != {'+', '-'} and len(set(operations)) != 2:
+        arranged_problems = "Error: Operator must be '+' or '-'."
+        return arranged_problems
+
+    numbers = []  # list of all operands in str format
+    for i in problems:
+        p = i.split()
+        numbers.extend([p[0], p[2]])
+
+    if not all(map(lambda x: x.isdigit(), numbers)):
+        arranged_problems = "Error: Numbers must only contain digits."
+        return arranged_problems
+
+    if not all(map(lambda x: len(x) < 5, numbers)):
+        arranged_problems = "Error: Numbers cannot be more than four digits."
+        return arranged_problems
+
+    top_row = ''
+    dashes = ''
+    values = list(map(lambda x: eval(x), problems))
+    solutions = ''
+    for i in range(0, len(numbers), 2):
+        space_width = max(len(numbers[i]), len(numbers[i+1])) + 2
+        top_row += numbers[i].rjust(space_width)
+        dashes += '-' * space_width
+        solutions += str(values[i // 2]).rjust(space_width)
+        if i != len(numbers) - 2:
+            top_row += ' ' * 4
+            dashes += ' ' * 4
+            solutions += ' ' * 4
+
+    bottom_row = ''
+    for i in range(1, len(numbers), 2):
+        space_width = max(len(numbers[i - 1]), len(numbers[i])) + 1
+        bottom_row += operations[i // 2]
+        bottom_row += numbers[i].rjust(space_width)
+        if i != len(numbers) - 1:
+            bottom_row += ' ' * 4
+
+    if val:
+        arranged_problems = '\n'.join((top_row, bottom_row, dashes, solutions))
+    else:
+        arranged_problems = '\n'.join((top_row, bottom_row, dashes))
+    return arranged_problems
+```
+
+**代码解析：**
+
+### map()函数
+
+map()是一个 Python 内建函数，它允许你不需要使用循环就可以编写简洁的代码。
+
+#### 一、Python map() 函数
+
+这个map()函数采用以下形式：
+
+```python
+map(function, iterable, ...)
+```
+
+它需要两个必须的参数：
+
+`function` - 针对每一个迭代调用的函数
+`iterable` - 支持迭代的一个或者多个对象。在 Python 中大部分内建对象，例如 lists, dictionaries, 和 tuples 都是可迭代的。
+在 Python 3 中，map()返回一个与传入可迭代对象大小一样的 map 对象。在 Python 2中，这个函数返回一个列表 list。
+
+让我们看看一个例子，更好地解释map()函数如何运作的。假如我们有一个字符串列表，我们想要将每一个元素都转换成大写字母。
+
+想要实现这个目的的一种方式是，使用传统的for循环:
+
+```python
+directions = ["north", "east", "south", "west"]
+directions_upper = []
+
+for direction in directions:
+d = direction.upper()
+directions_upper.append(d)
+
+print(directions_upper)
+```
+
+输出：
+
+```python
+['NORTH', 'EAST', 'SOUTH', 'WEST']
+```
+
+使用 map() 函数，代码将会非常简单，非常灵活。
+
+```python
+def to_upper_case(s):
+return s.upper()
+
+directions = ["north", "east", "south", "west"]
+
+directions_upper = map(to_upper_case, directions)
+
+print(list(directions_upper))
+```
+
+我们将会使用list()函数，来将返回的 map 转换成 list 列表：
+
+输出：
+
+```python
+['NORTH', 'EAST', 'SOUTH', 'WEST']
+```
+
+如果返回函数很简单，更 Python 的方式是使用 lambda 函数：
+
+```python
+directions = ["north", "east", "south", "west"]
+
+directions_upper = map(lambda s: s.upper(), directions)
+
+print(list(directions_upper))
+```
+
+一个 lambda 函数是一个小的匿名函数。
+下面是另外一个例子，显示如何创建一个列表，从1到10。
+
+```python
+squares = map(lambda n: n*n , range(1, 11))
+print(list(squares))
+```
+
+输出：
+
+```python
+[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+```
+
+`range()` 函数生成一系列的整数。
+
+#### 二、对多个迭代对象使用map()
+
+你可以将任意多的可迭代对象传递给map()函数。回调函数接受的必填输入参数的数量，必须和可迭代对象的数量一致。
+
+下面的例子显示如何在两个列表上执行元素级别的操作：
+
+```python
+def multiply(x, y):
+return x * y
+
+a = [1, 4, 6]
+b = [2, 3, 5]
+
+result = map(multiply, a, b)
+
+print(list(result))
+```
+
+输出：
+
+```python
+[2, 12, 30]
+```
+
+同样的代码，使用 lambda 函数，会像这样：
+
+```python
+a = [1, 4, 6]
+b = [2, 3, 5]
+
+result = map(lambda x, y: x*y, a, b)
+
+print(list(result))
+```
+
+当提供多个可迭代对象时，返回对象的数量大小和最短的迭代对象的数量一致。
+
+让我们看看一个例子，当可迭代对象的长度不一致时：
+
+```python
+a = [1, 4, 6]
+b = [2, 3, 5, 7, 8]
+
+result = map(lambda x, y: x*y, a, b)
+```
+
+print(list(result))
+超过的元素 （7 和 8 ）被忽略了。
+
+```python
+[2, 12, 30]
+```
+
+
+
+#### 三、总结
+
+Python 的 map()函数作用于一个可迭代对象，使用一个函数，并且将函数应用于这个可迭代对象的每一个元素
