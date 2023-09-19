@@ -153,6 +153,8 @@ arithmetic_arranger(["32 + 8", "1 - 3801", "9999 + 9999", "523 - 49"], True)
 
 ## 练习题1_题解
 
+### 代码示例：
+
 Exercise_1.py如下所示：
 
 ```python
@@ -226,13 +228,13 @@ def arithmetic_arranger(problems, val=False):
     return arranged_problems
 ```
 
-**代码解析：**
+### 函数说明：
 
-### map()函数
+#### map()函数
 
-map()是一个 Python 内建函数，它允许你不需要使用循环就可以编写简洁的代码。
+map()是一个 Python 内建(置)函数，它允许你不需要使用循环就可以编写简洁的代码。它的作用是将一个函数作用于一个可迭代对象的所有元素上，并返回一个新的可迭代对象，其元素为原可迭代对象元素经过该函数处理后的结果。
 
-#### 一、Python map() 函数
+##### 一、Python map() 函数
 
 这个map()函数采用以下形式：
 
@@ -243,8 +245,193 @@ map(function, iterable, ...)
 它需要两个必须的参数：
 
 `function` - 针对每一个迭代调用的函数
-`iterable` - 支持迭代的一个或者多个对象。在 Python 中大部分内建对象，例如 lists, dictionaries, 和 tuples 都是可迭代的。
+	`iterable` - 支持迭代的一个或者多个对象。在 Python 中大部分内建对象，例如 lists, dictionaries, 和 tuples 都是可迭代的。
 在 Python 3 中，map()返回一个与传入可迭代对象大小一样的 map 对象。在 Python 2中，这个函数返回一个列表 list。
+
+map()是 Python 内置的高阶函数，它接收一个函数 f 和一个 list，并通过把函数 f 依次作用在 list 的每个元素上，得到一个新的 list 并返回。
+
+例如，对于list [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+如果希望把list的每个元素都作平方，就可以用map()函数：
+
+因此，我们只需要传入函数f(x)=x*x，就可以利用map()函数完成这个计算：
+
+```python
+def f(x):
+    return x*x
+print map(f, [1, 2, 3, 4, 5, 6, 7, 8, 9])
+
+
+```
+
+输出结果：
+
+```python
+[1, 4, 9, 10, 25, 36, 49, 64, 81]
+```
+
+注意：map()函数不改变原有的 list，而是返回一个新的 list。
+
+利用map()函数，可以把一个 list 转换为另一个 list，只需要传入转换函数。
+
+由于list包含的元素可以是任何类型，因此，map() 不仅仅可以处理只包含数值的 list，事实上它可以处理包含任意类型的 list，只要传入的函数f可以处理这种数据类型。
+
+任务
+	假设用户输入的英文名字不规范，没有按照首字母大写，后续字母小写的规则，请利用map()函数，把一个list（包含若干不规范的英文名字）变成一个包含规范英文名字的list：
+
+输入：['adam', 'LISA', 'barT']
+	输出：['Adam', 'Lisa', 'Bart']
+
+```python
+def format_name(s):
+    s1=s[0:1].upper()+s[1:].lower();
+    return s1;
+
+print map(format_name, ['adam', 'LISA', 'barT'])
+```
+
+
+map（）函数是python内置的高阶函数，对传入的list的每一个元素进行映射，返回一个新的映射之后的list
+
+使用map()函数可以实现将其他类型的数转换成list，但是这种转换也是有类型限制的，具体什么类型限制，在以后的学习中慢慢摸索吧。这里给出几个能转换的例子：
+
+```python
+***将元组转换成list***
+
+>>> map(int, (1,2,3))
+[1, 2, 3]
+```
+
+```python
+***将字符串转换成list***
+>>> map(int, '1234')
+[1, 2, 3, 4]
+```
+
+```python
+***提取字典的key，并将结果存放在一个list中***
+>>> map(int, {1:2,2:3,3:4})
+>>> [1, 2, 3]
+```
+
+```python
+***提取字典的key，并将结果存放在一个list中***
+>>> map(int, {1:2,2:3,3:4})
+>>> [1, 2, 3]
+```
+
+```python
+#将小写转成大写
+def u_to_l (s):
+	return s.upper()
+	print map(u_to_l,'asdfd'
+
+print map(None, [2,4,6],[3,2,1])
+```
+
+**判断list 中重复出现的次数**
+
+方法一：   
+
+```python
+mylist = [1,2,2,2,2,3,3,3,4,4,4,4]
+myset = set(mylist)  #myset是另外一个列表，里面的内容是mylist里面的无重复 项
+for item in myset:
+	print("the %d has found %d" %(item,mylist.count(item)))
+```
+
+方法二：	
+
+```python
+List=[1,2,2,2,2,3,3,3,4,4,4,4]
+a = {}
+for i in List:
+	if List.count(i)>1:
+    meia[i] = List.count(i)
+print (a)
+```
+
+方法三：利用字典的特性来实现。
+
+```python
+>>> from collections import Counter
+>>> Counter([1,2,2,2,2,3,3,3,4,4,4,4])
+Counter({1: 5, 2: 3, 3: 2})
+```
+
+这里再增补一个只用列表实现的方法：
+
+```python
+l=[1,4,2,4,2,2,5,2,6,3,3,6,3,6,6,3,3,3,7,8,9,8,7,0,7,1,2,4,7,8,9]
+
+count_times = []
+for i in l :
+  count_times.append(l.count(i))
+
+m = max(count_times)
+n = l.index(m)
+print (l[n])
+```
+
+方法四：
+
+```python
+len(list) == len(set(list))
+```
+
+map() 会根据提供的函数对指定序列做映射。
+
+第一个参数 function 以参数序列中的每一个元素调用 function 函数，返回包含每次 function 函数返回值的新列表。
+
+Python 2.x 返回列表。
+
+Python 3.x 返回迭代器。
+
+**Python2.x 实例**
+
+```python
+>>> def square(x) :            # 计算平方数
+...     return x ** 2
+... 
+>>> map(square, [1,2,3,4,5])   # 计算列表各个元素的平方
+[1, 4, 9, 16, 25]
+>>> map(lambda x: x ** 2, [1, 2, 3, 4, 5])  # 使用 lambda 匿名函数
+[1, 4, 9, 16, 25]
+
+# 提供了两个列表，对相同位置的列表数据进行相加
+>>> map(lambda x, y: x + y, [1, 3, 5, 7, 9], [2, 4, 6, 8, 10])
+[3, 7, 11, 15, 19]
+```
+
+**Python3.x 实例**
+
+```python
+>>> def square(x) :         # 计算平方数
+...     return x ** 2
+... 
+>>> map(square, [1,2,3,4,5])    # 计算列表各个元素的平方
+<map object at 0x100d3d550>     # 返回迭代器
+>>> list(map(square, [1,2,3,4,5]))   # 使用 list() 转换为列表
+[1, 4, 9, 16, 25]
+>>> list(map(lambda x: x ** 2, [1, 2, 3, 4, 5]))   # 使用 lambda 匿名函数
+[1, 4, 9, 16, 25]
+>>>
+```
+
+**注意：**
+
+如果函数有多个参数, 但每个参数的序列元素数量不一样, 会根据最少元素的序列进行：
+
+```python
+>>> listx = [1,2,3,4,5,6,7]       # 7 个元素
+>>> listy = [2,3,4,5,6,7]         # 6 个元素 
+>>> listz = [100,100,100,100]     # 4 个元素
+>>> list_result = map(lambda x,y,z : x**2 + y + z,listx, listy, listz)
+>>> print(list(list_result))
+[103, 107, 113, 121]
+```
+
+明显可以看出是由于 lambda 中的 z 参数,实际是使用了 listz, 而 listz 里面只有 4 个元素, 所以即使 listx 有 7 个元素, listy 有 6 个元素,也不会继续执行了，只执行了 4 个元素的的计算。
 
 让我们看看一个例子，更好地解释map()函数如何运作的。假如我们有一个字符串列表，我们想要将每一个元素都转换成大写字母。
 
@@ -255,9 +442,9 @@ directions = ["north", "east", "south", "west"]
 directions_upper = []
 
 for direction in directions:
-d = direction.upper()
-directions_upper.append(d)
-
+	d = direction.upper()
+	directions_upper.append(d)
+    
 print(directions_upper)
 ```
 
@@ -271,12 +458,10 @@ print(directions_upper)
 
 ```python
 def to_upper_case(s):
-return s.upper()
+	return s.upper()
 
 directions = ["north", "east", "south", "west"]
-
 directions_upper = map(to_upper_case, directions)
-
 print(list(directions_upper))
 ```
 
@@ -292,9 +477,7 @@ print(list(directions_upper))
 
 ```python
 directions = ["north", "east", "south", "west"]
-
 directions_upper = map(lambda s: s.upper(), directions)
-
 print(list(directions_upper))
 ```
 
@@ -314,7 +497,7 @@ print(list(squares))
 
 `range()` 函数生成一系列的整数。
 
-#### 二、对多个迭代对象使用map()
+##### 二、对多个迭代对象使用map()
 
 你可以将任意多的可迭代对象传递给map()函数。回调函数接受的必填输入参数的数量，必须和可迭代对象的数量一致。
 
@@ -326,7 +509,6 @@ return x * y
 
 a = [1, 4, 6]
 b = [2, 3, 5]
-
 result = map(multiply, a, b)
 
 print(list(result))
@@ -343,7 +525,6 @@ print(list(result))
 ```python
 a = [1, 4, 6]
 b = [2, 3, 5]
-
 result = map(lambda x, y: x*y, a, b)
 
 print(list(result))
@@ -356,7 +537,6 @@ print(list(result))
 ```python
 a = [1, 4, 6]
 b = [2, 3, 5, 7, 8]
-
 result = map(lambda x, y: x*y, a, b)
 ```
 
@@ -369,6 +549,25 @@ print(list(result))
 
 
 
-#### 三、总结
+##### 三、总结
 
-Python 的 map()函数作用于一个可迭代对象，使用一个函数，并且将函数应用于这个可迭代对象的每一个元素
+Python 的 map()函数作用于一个可迭代对象，使用一个函数，并且将函数应用于这个可迭代对象的每一个元素。
+
+#### lambda（）函数
+
+
+
+#### split()函数
+
+
+
+#### set函数
+
+
+
+#### isdigit()函数
+
+
+
+#### eval(x)函数
+

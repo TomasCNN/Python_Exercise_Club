@@ -11,6 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>Python_Exercise_Club</Name>
     <RootNamespace>Python_Exercise_Club</RootNamespace>
+    <TestFramework>Pytest</TestFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
