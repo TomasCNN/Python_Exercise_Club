@@ -669,11 +669,88 @@ print(reduce(lambda a,b:'{},{}'.format(a,b),[1,2,3,4,5,6,7,8,9]))
 
 另外，部分Python库函数也接收函数作为参数，例如gevent的spawn函数。此时，lambda函数也能够作为参数传入。
 
-
-
 #### split()函数
 
+split()函数是Python字符串函数。split() 通过指定分隔符对字符串进行切片。如果指定了整型参数num，则仅分隔num + 1个子字符串（即分割num次）。使用split()函数将字符串分割后，返回的是一个列表，列表中存储着分割后的每个子串。
 
+```python
+str.split(str="", num=string.count(str)).
+```
+
+- str -- 分隔符，默认为所有的空字符，包括空格、换行(\n)、制表符(\t)等。
+- num -- 分割次数。默认为 -1, 即分隔所有。
+- 返回分割后的字符串列表。
+
+##### 一、split()函数示例
+
+**1. 所有参数都省略**
+
+```python
+s = 'Hello world!'
+d = s.split()
+print(d)
+```
+
+输出结果为：
+
+```python
+['Hello', 'world!']
+```
+
+**2. 仅指定分隔符**
+
+```python
+s = 'Hello world！ I am Python&I am not Java!'
+d = s.split('&')
+print(d)
+```
+
+输出结果为：
+
+```python
+['Hello world！ I am Python', 'I am not Java!']
+```
+
+**3. 指定分隔符和分割次数**
+
+```python
+s = 'I am Python&I am not Java!&Python is Interesting'
+d = s.split('&', 1)
+print(d)
+```
+
+输出结果为：
+
+```python
+['I am Python', 'I am not Java!&Python is Interesting']
+```
+
+**注意事项：**
+
+**1. 使用split()后，有效分隔符不会存在于任何子串中。**
+
+有效分隔符：待分割的字符串中存在该分隔符，且num参数有效。
+
+```python
+>>> s = "list&index&out&of&range"
+>>> s_l = s.split("&")
+>>> s_l.count("&")
+0
+>>> s_l
+['list', 'index', 'out', 'of', 'range']
+```
+
+**2. 使用空字符串作为分隔符时，Python会报错**
+
+当使用空字符串作为分隔符时，Python会抛出ValueError。
+
+```python
+>>> demo = "a, b, c, d"
+>>> demo.split("")
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ValueError: empty separator
+```
 
 #### set函数
 
@@ -685,3 +762,6 @@ print(reduce(lambda a,b:'{},{}'.format(a,b),[1,2,3,4,5,6,7,8,9]))
 
 #### eval(x)函数
 
+
+
+#### format(x)函数
