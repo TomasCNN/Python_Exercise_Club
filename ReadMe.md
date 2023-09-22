@@ -155,7 +155,7 @@ arithmetic_arranger(["32 + 8", "1 - 3801", "9999 + 9999", "523 - 49"], True)
 
 ### 代码示例：
 
-Exercise_1.py如下所示：
+**Exercise_1.py如下所示：**
 
 ```python
 # This entrypoint file to be used in development. Start by reading README.md
@@ -171,7 +171,7 @@ print(arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"],TRUE))
 main(module='test_module', exit=False)
 ```
 
-arithmetic_arranger.py如下所示：
+**arithmetic_arranger.py如下所示：**
 
 ```python
 def arithmetic_arranger(problems, val=False):
@@ -228,9 +228,60 @@ def arithmetic_arranger(problems, val=False):
     return arranged_problems
 ```
 
+**test_module.py如下所示：**
+
+```python
+
+import unittest
+from arithmetic_arranger import arithmetic_arranger
+
+
+# the test case
+class UnitTests(unittest.TestCase):
+    def test_arrangement(self):
+        actual = arithmetic_arranger(["3 + 855", "3801 - 2", "45 + 43", "123 + 49"])
+        expected = "    3      3801      45      123\n+ 855    -    2    + 43    +  49\n-----    ------    ----    -----"
+        self.assertEqual(actual, expected, 'Expected different output when calling "arithmetic_arranger()" with ["3 + 855", "3801 - 2", "45 + 43", "123 + 49"]')
+
+        actual = arithmetic_arranger(["11 + 4", "3801 - 2999", "1 + 2", "123 + 49", "1 - 9380"])
+        expected = "  11      3801      1      123         1\n+  4    - 2999    + 2    +  49    - 9380\n----    ------    ---    -----    ------"
+        self.assertEqual(actual, expected, 'Expected different output when calling "arithmetic_arranger()" with ["11 + 4", "3801 - 2999", "1 + 2", "123 + 49", "1 - 9380"]')
+
+    def test_too_many_problems(self):
+        actual = arithmetic_arranger(["44 + 815", "909 - 2", "45 + 43", "123 + 49", "888 + 40", "653 + 87"])
+        expected = "Error: Too many problems."
+        self.assertEqual(actual, expected, 'Expected calling "arithmetic_arranger()" with more than five problems to return "Error: Too many problems."')
+
+    def test_incorrect_operator(self):
+        actual = arithmetic_arranger(["3 / 855", "3801 - 2", "45 + 43", "123 + 49"])
+        expected = "Error: Operator must be '+' or '-'."
+        self.assertEqual(actual, expected, '''Expected calling "arithmetic_arranger()" with a problem that uses the "/" operator to return "Error: Operator must be '+' or '-'."''')
+        
+    def test_too_many_digits(self):
+        actual = arithmetic_arranger(["24 + 85215", "3801 - 2", "45 + 43", "123 + 49"])
+        expected = "Error: Numbers cannot be more than four digits."
+        self.assertEqual(actual, expected, 'Expected calling "arithmetic_arranger()" with a problem that has a number over 4 digits long to return "Error: Numbers cannot be more than four digits."')
+
+    def test_only_digits(self):
+        actual = arithmetic_arranger(["98 + 3g5", "3801 - 2", "45 + 43", "123 + 49"])
+        expected = "Error: Numbers must only contain digits."
+        self.assertEqual(actual, expected, 'Expected calling "arithmetic_arranger()" with a problem that contains a letter character in the number to return "Error: Numbers must only contain digits."')
+
+    def test_solutions(self):
+        actual = arithmetic_arranger(["32 - 698", "1 - 3801", "45 + 43", "123 + 49"], True)
+        expected = "   32         1      45      123\n- 698    - 3801    + 43    +  49\n-----    ------    ----    -----\n -666     -3800      88      172"
+        self.assertEqual(actual, expected, 'Expected solutions to be correctly displayed in output when calling "arithmetic_arranger()" with arithmetic problems and a second argument of `True`.')
+
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+
+
 ### 函数说明：
 
-#### map()函数
+#### map( )函数
 
 map()是一个 Python 内建(置)函数，它允许你不需要使用循环就可以编写简洁的代码。它的作用是将一个函数作用于一个可迭代对象的所有元素上，并返回一个新的可迭代对象，其元素为原可迭代对象元素经过该函数处理后的结果。
 
@@ -244,8 +295,8 @@ map(function, iterable, ...)
 
 它需要两个必须的参数：
 
-`function` - 针对每一个迭代调用的函数
-	`iterable` - 支持迭代的一个或者多个对象。在 Python 中大部分内建对象，例如 lists, dictionaries, 和 tuples 都是可迭代的。
+​	`function` - 针对每一个迭代调用的函数
+​	`iterable` - 支持迭代的一个或者多个对象。在 Python 中大部分内建对象，例如 lists, dictionaries, 和 tuples 都是可迭代的。
 在 Python 3 中，map()返回一个与传入可迭代对象大小一样的 map 对象。在 Python 2中，这个函数返回一个列表 list。
 
 map()是 Python 内置的高阶函数，它接收一个函数 f 和一个 list，并通过把函数 f 依次作用在 list 的每个元素上，得到一个新的 list 并返回。
@@ -553,7 +604,7 @@ print(list(result))
 
 Python 的 map()函数作用于一个可迭代对象，使用一个函数，并且将函数应用于这个可迭代对象的每一个元素。
 
-#### lambda（）函数
+#### lambda( )函数
 
 ##### 一、Python lambda() 函数
 
@@ -669,7 +720,7 @@ print(reduce(lambda a,b:'{},{}'.format(a,b),[1,2,3,4,5,6,7,8,9]))
 
 另外，部分Python库函数也接收函数作为参数，例如gevent的spawn函数。此时，lambda函数也能够作为参数传入。
 
-#### split()函数
+#### split( )函数
 
 split()函数是Python字符串函数。split() 通过指定分隔符对字符串进行切片。如果指定了整型参数num，则仅分隔num + 1个子字符串（即分割num次）。使用split()函数将字符串分割后，返回的是一个列表，列表中存储着分割后的每个子串。
 
@@ -735,8 +786,11 @@ print(d)
 >>> s = "list&index&out&of&range"
 >>> s_l = s.split("&")
 >>> s_l.count("&")
+
 0
+
 >>> s_l
+
 ['list', 'index', 'out', 'of', 'range']
 ```
 
@@ -747,21 +801,599 @@ print(d)
 ```python
 >>> demo = "a, b, c, d"
 >>> demo.split("")
+
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 ValueError: empty separator
 ```
 
-#### set函数
+
+
+#### set( )函数
+
+**set()** 函数创建一个无序不重复元素集，可进行关系测试，删除重复数据，还可以计算交集、差集、并集等。基本功能包括关系测试和消除重复元素。集合对象还支持 union（联合），intersection（交），difference（差）和 sysmmetric difference（对称差集）等数学运算。
+
+语法：
+
+```python
+set(iterable)
+```
+
+参数：
+
+iterable - 必需。序列、集合或迭代器对象。
+
+```python
+a = set({1,2,3,4,5,6,7,5,4,6,2,1})
+print(a)
+```
+
+输出结果为：
+
+```python
+{1, 2, 3, 4, 5, 6, 7}
+```
+
+##### 一、构造集合
+
+可以使用大括号 **{ }** 或者 **set()** 函数创建集合，注意：创建一个空集合必须用 **set()** 而不是 **{ }**，因为 **{ }** 是用来创建一个空字典。
+
+1、使用大括号`{}`
+
+```python
+basket = {'apple', 'orange', 'apple', 'pear', 'orange', 'banana'}
 
 
 
-#### isdigit()函数
+print(basket)  # {'apple', 'orange', 'banana', 'pear'}
+```
+
+当使用`print()函数`打印输出时，会自动**将集合中重复的元素去除**，且每次打印**返回的顺序并不和初始的一致**。
+
+ 2、使用`set()`函数
+
+```python
+fruit = set(("apple", "banana", "cherry"))  # 请留意这个双括号
 
 
 
-#### eval(x)函数
+print(fruit)  # {'banana', 'apple', 'cherry'}
+```
+
+在使用`set()函数`创建集合时，一定要注意**双括号**。
+
+##### 二、向 set 集合中添加元素
+
+set 集合中添加元素，可以使用 set 类型提供的 add() 方法实现，该方法的语法格式为：
+
+```python
+setname.add(element)
+```
+
+其中，`setname `表示要添加元素的集合，`element` 表示要添加的元素内容。
+
+需要注意的是，使用 add() 方法添加的元素，只能是数字、字符串、元组或者布尔类型（True 和 False）值，不能添加列表、字典、集合这类可变的数据，否则 Python 解释器会报 TypeError 错误。例如：
+
+```python
+a = {1,2,3}a.add((1,2))print(a)a.add([1,2])print(a)
+```
+
+运行结果为：
+
+```python
+{(1, 2), 1, 2, 3}
+Traceback (most recent call last):
+ File "C:\Users\mengma\Desktop\1.py", line 4, in <module>
+  a.add([1,2])
+TypeError: unhashable type: 'list'
+```
+
+##### 三、从set集合中删除元素
+
+删除现有 set 集合中的指定元素，可以使用 remove() 方法，该方法的语法格式如下：
+
+```python
+setname.remove(element)
+```
+
+使用此方法删除集合中元素，需要注意的是，如果被删除元素本就不包含在集合中，则此方法会抛出 KeyError 错误，例如：
+
+```python
+a = {1,2,3}
+a.remove(1)
+print(a)
+a.remove(1)
+print(a)
+```
+
+运行结果为：
+
+```python
+{2, 3}
+Traceback (most recent call last):
+ File "C:\Users\mengma\Desktop\1.py", line 4, in <module>
+  a.remove(1)
+KeyError: 1
+```
+
+上面程序中，由于集合中的元素 1 已被删除，因此当再次尝试使用 remove() 方法删除时，会引发 KeyError 错误。
+
+如果我们不想在删除失败时令解释器提示 KeyError 错误，还可以使用 discard() 方法，此方法和 remove() 方法的用法完全相同，唯一的区别就是，当删除集合中元素失败时，此方法不会抛出任何错误。
+
+例如：
+
+```python
+a = {1,2,3}a.remove(1)print(a)a.discard(1)print(a)
+```
+
+运行结果为：
+
+```python
+{2, 3}
+{2, 3}
+```
+
+##### 四、清空set集合中的所有元素
+
+清空set 集合中所有的元素，可以使用 clear() 方法，该方法的语法格式如下：
+
+```python
+setname.clear(element)
+```
+
+使用此方法清空集合中元素，需要注意的是，set()才表示空集合，{}表示的是空字典：
+
+```python
+set1 = {1,2,3}
+set1.clear()
+print（set1）
+```
+
+运行结果为：
+
+```python
+set()
+```
+
+##### 五、拷贝set集合中的元素
+
+拷贝set 集合中所有的元素，可以使用 capy() 方法，该方法的语法格式如下：
+
+```python
+setname2 = .setname1.copy(element)
+```
+
+使用此方法拷贝集合中元素是，拷贝 set1 集合给 set2:
+
+```python
+set1 = {1,2,3}
+set2 = set1.copy()
+print(set1)
+set1.add(4)
+print(set1)
+print(set2)
+```
+
+运行结果为：
+
+```python
+{1, 2, 3}
+{1, 2, 3, 4}
+{1, 2, 3}
+```
+
+**注意：**详见
+
+[Python set集合方法详解（全） (biancheng.net)](http://c.biancheng.net/view/4402.html)
+
+[Python的set集合详解 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/98994486)
+
+[【python】集合set详解（超详细）_python set 集合-CSDN博客](https://blog.csdn.net/devil_son1234/article/details/128930682)
+
+```python
+>>> x = set('eleven')
+>>> y = set('twelve')
+>>> x,y
+({'l', 'e', 'n', 'v'}, {'e', 'v', 'l', 't', 'w'})
+>>> x & y  #交集
+{'l', 'e', 'v'}
+>>> x | y  #并集
+{'e', 'v', 'n', 'l', 't', 'w'}
+>>> x - y  #差集
+{'n'}
+>>> y -x   #差集
+{'t', 'w'}
+>>> x ^ y  #补集
+{'t', 'n', 'w'}
+>>> y ^ x  #补集
+{'w', 'n', 't'}
+```
+
+**交集 &** : **x&y**，返回一个新的集合，包括同时在集合 x 和y中的共同元素。
+
+**并集 |** : **x|y**，返回一个新的集合，包括集合 x 和 y 中所有元素。
+
+**差集 -** : **x-y**，返回一个新的集合,包括在集合 x 中但不在集合 y 中的元素。
+
+**补集 ^** : **x^y**，返回一个新的集合，包括集合 x 和 y 的非共同元素。
 
 
 
-#### format(x)函数
+##### 六、创建空集合
+
+```python
+>>> s=set()
+>>> s
+set()
+>>> s1=set([])　＃列表
+>>> s1
+set()
+>>> s2=set(())　＃元组
+>>> s2
+set()
+>>> s3=set({})　＃字典
+>>> s3
+set()
+```
+
+**注意：**想要创建空集合，你必须使用 set() 而不是 {}。后者用于创建空字典，我们在后面介绍的一种数据结构。
+
+##### 七、创建非空集合
+
+　即列表，元组，字典不在是空值，举两个例子
+
+```text
+>>> s1=set([1,2,3,4])
+>>> s1
+{1, 2, 3, 4}
+　　
+>>> s3=set({'a':2,'b':3,'c':4})
+>>> s3
+{'c', 'a', 'b'}
+```
+
+　　注：字典转set集合，需要注意的是，只取了字典的key，相当于将字典中的dict.keys()列表转成set集合。
+
+#### isdigit( )函数
+
+##### 一、描述
+
+Python isdigit() 方法检测字符串是否只由数字组成，只对 0 和 正数有效。
+
+##### 二、语法
+
+isdigit()方法语法：
+
+```python
+str.isdigit()
+```
+
+##### 三、参数
+
+- 无。
+
+##### 四、返回值
+
+如果字符串只包含数字则返回 True 否则返回 False。
+
+##### 五、实例
+
+```python
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+ 
+str = "123456"  # 字符串只包含数字
+print (str.isdigit())
+ 
+str = "this is string example....wow!!!"
+print (str.isdigit())
+ 
+str = "0"
+print (str.isdigit())
+ 
+str = "-1"
+print (str.isdigit())
+```
+
+**注意：**isdigit() 方法只对正整数有效，负数及小数均返回不正确。
+
+可以使用以下函数来解决：
+
+```python
+# 判断是否为数字
+def is_number(s):    
+    try:    # 如果能运⾏ float(s) 语句，返回 True（字符串 s 是浮点数）        
+        float(s)        
+        return True    
+    except ValueError:  # ValueError 为 Python 的⼀种标准异常，表⽰"传⼊⽆效的参数"        
+        pass  # 如果引发了 ValueError 这种异常，不做任何事情（pass：不做任何事情，⼀般⽤做占位语句）    
+    try:        
+        import unicodedata  # 处理 ASCII 码的包        
+        unicodedata.numeric(s)  # 把⼀个表⽰数字的字符串转换为浮点数返回的函数        
+        return True    
+    except (TypeError, ValueError):        
+        pass    
+        return False
+
+print(is_number(1))
+print(is_number(1.0))
+print(is_number(0))
+print(is_number(-2))
+print(is_number(-2.0))
+print(is_number("abc"))
+```
+
+输出结果为：
+
+```python
+True
+True
+True
+True
+True
+False
+```
+
+
+
+#### eval( )函数
+
+##### 一、描述
+
+python是用命名空间来记录变量的轨迹的，命名空间是一个dictionary，键是变量名，值是变量值。
+
+当一行代码要使用变量 x 的值时，Python 会到所有可用的名字空间去查找变量，按照如下顺序:
+
+1）局部名字空间 - 特指当前函数或类的方法。如果函数定义了一个局部变量 x, 或一个参数 x，Python 将使用它，然后停止搜索。
+
+2）全局名字空间 - 特指当前的模块。如果模块定义了一个名为 x 的变量，函数或类，Python 将使用它然后停止搜索。
+
+3）内置名字空间 - 对每个模块都是全局的。作为最后的尝试，Python 将假设 x 是内置函数或变量。
+
+python的全局名字空间存储在一个叫globals()的dict对象中；局部名字空间存储在一个叫locals()的dict对象中。我们可以用print (locals())来查看该函数体内的所有变量名和变量值。
+
+eval()使用原因：
+
+1）在编译语言里要动态地产生代码，基本上是不可能的，但动态语言是可以，意味着软件已经部署到服务器上了，但只要作很少的更改，只好直接修改这部分的代码，就可立即实现变化，不用整个软件重新加载。
+
+2）在machin learning里根据用户使用这个软件频率，以及方式，可动态地修改代码，适应用户的变化。
+
+##### 二、语法
+
+以下是 eval() 方法的语法:
+
+```python
+eval(expression[, globals[, locals]])
+```
+
+##### 三、参数
+
+- expression -- 表达式。
+- globals -- 变量作用域，全局命名空间，如果被提供，则必须是一个字典对象。
+- locals -- 变量作用域，局部命名空间，如果被提供，可以是任何映射对象。
+
+​	eval() 函数将字符串 expression 解析为 Python 表达式，并在指定的命名空间中执行它。
+
+**expression：**表达式，上面提到eval函数用于执行一个字符串表达式，表达式的内容就放在此处。当表达式涉及到
+		**globals：**该部分必须是字典！必须是字典！必须是字典！否则程序会出错。当定义了globals 参数之后eval函数的作用域会被限定在globals中。
+		**locals：**该参数掌控局部的命名空间，功能和globals类型，不过当参数冲突时，会执行locals处的参数。
+
+**eval()** 函数用来执行一个字符串表达式，并返回表达式的值。
+
+将字符串转为python语句（就是去掉“”）然后执行转化后的语句。
+
+**字符串表达式**可以包含变量、函数调用、运算符和其他 Python 语法元素。
+
+使用input()函数输入，数据会以字符串的形式返回。如果我们输入的是需要参与计算的数字，则还需要转换类型，有了eval()函数，我们可以这样做：
+
+```python
+eval(input("请输入数字"))
+```
+
+将字符串str当成有效的表达式来求值并返回计算结果。globals和locals参数是可选的，如果提供了globals参数，那么它必须是dictionary类型；如果提供了locals参数，那么它可以是任意的map对象。
+
+**expression参数示例：**
+
+```python
+a=10;
+print(eval("a+1"))
+```
+
+输出结果为：
+
+```python
+11
+```
+
+**【解析】：**因为现在指定了globals，所以在expression部分的作用域就是globals指定的字典范围内。所以此时外面的a=10被屏蔽，取用字典中的值。
+
+**locals参数示例：**
+
+
+
+
+
+##### 四、返回值
+
+eval() 函数将字符串转换为相应的对象，并返回表达式的结果。
+
+##### 五、作用
+
+**字符转换为列表**
+
+**字符串转换为字典**
+
+**字符转换为元组**
+
+##### 六、实例
+
+以下展示了使用 eval() 方法的实例：
+
+实例 1
+
+运行程序：
+
+```python
+x = 7 
+eval( '3 * x' ) 
+```
+
+运行结果为：
+
+```python
+21 
+```
+
+运行程序：
+
+```python
+eval('pow(2,2)') 
+```
+
+运行结果为：
+
+```python
+4 
+```
+
+运行程序：
+
+```python
+eval('2 + 2') 
+```
+
+运行结果为：
+
+```python
+4 
+```
+
+运行程序：
+
+```python
+n=81 
+eval("n + 4") 
+```
+
+运行结果为：
+
+```python
+85
+```
+
+
+
+**实例 2**
+
+运行程序：
+
+```python
+# 执行简单的数学表达式
+result = eval("2 + 3 * 4")
+**print**(result) 
+```
+
+运行结果为：
+
+```python
+14
+```
+
+运行程序：
+
+```python
+# 执行变量引用
+x = 10
+result = eval("x + 5")
+**print**(result)
+```
+
+运行结果为：
+
+```python
+15
+```
+
+运行程序：
+
+```python
+# 在指定命名空间中执行表达式
+namespace = {'a': 2, 'b': 3}
+result = eval("a + b", namespace)
+**print**(result) # 输出: 5
+```
+
+运行结果为：
+
+```python
+5
+```
+
+**注意：** eval() 函数执行的代码具有潜在的安全风险。如果使用不受信任的字符串作为表达式，则可能导致代码注入漏洞，因此，应谨慎使用 eval() 函数，并确保仅执行可信任的字符串表达式。
+
+**eval() 函数**可以将字符串对应的名字的变量转换成该变量对应的值：
+
+```python
+>>> x='7'
+>>> x
+'7'
+>>> a=eval(x)
+>>> a
+7
+>>> b='a'     # 等价于b='7'
+>>> c=eval(b)
+>>> c
+7
+```
+
+```python
+>>>str1 = "[{11,22},{22,33},{33,44},{44,55}]"
+>>>type(str1)
+<class 'str'>
+>>>list1 = eval(str1)
+>>>list1
+[{11,22},{22,33},{33,44},{44,55}]
+>>>type(list)
+<class 'list'>
+>>>a = input("请输入:")
+>>>__import__("os").getcwd()
+>>>eval(a)
+C:\Python27  # 输出结果是保存代码的文件夹路径
+```
+
+eval() 函数也可以直接用来提取用户输入的多个值。
+
+```python
+a,b=eval(input())
+```
+
+#### format( )函数
+
+format()函数是格式化输入输出函数，功能很强大，它把字符串当成一个模板，通过传入的参数进行格式化，并且使用大括号‘{}’作为特殊字符代替‘%’。
+
+format函数是一种格式化输出字符串的函数(str.format), 基本语法是通过 {} 和 : 来代替以前的%
+
+-   { }中可以填写后面元组中的下标
+-   { }也可以填写后面的字段名
+-   % 需要知道替换字符的类型，format则不需要
+
+1、基本用法
+
+-   （1）不带编号，即“{}”
+-   （2）带数字编号，可调换顺序，即“{1}”、“{2}”
+-   （3）带关键字，即“{a}”、“{tom}”
+
+2、进阶用法
+
+-   （1）< （默认）左对齐、> 右对齐、^ 中间对齐、= （只用于数字）在小数点后进行补齐
+-   （2）取位数“{:4s}”、"{:.2f}"等
+
+3、通过位置匹配参数
+
+详见：
+
+[python中format用法（最全汇总）_format在python中的用法_西部点心王的博客-CSDN博客](https://blog.csdn.net/moqisaonianqiong/article/details/114674204)
+
+[Python format 格式化函数 | 菜鸟教程 (runoob.com)](https://www.runoob.com/python/att-string-format.html)
+
+[Python format() 函数 (w3school.com.cn)](https://www.w3school.com.cn/python/ref_func_format.asp)
