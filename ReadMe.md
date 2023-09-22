@@ -230,7 +230,7 @@ def arithmetic_arranger(problems, val=False):
 
 ### 函数说明：
 
-#### map()函数
+#### map( )函数
 
 map()是一个 Python 内建(置)函数，它允许你不需要使用循环就可以编写简洁的代码。它的作用是将一个函数作用于一个可迭代对象的所有元素上，并返回一个新的可迭代对象，其元素为原可迭代对象元素经过该函数处理后的结果。
 
@@ -553,7 +553,7 @@ print(list(result))
 
 Python 的 map()函数作用于一个可迭代对象，使用一个函数，并且将函数应用于这个可迭代对象的每一个元素。
 
-#### lambda（）函数
+#### lambda( )函数
 
 ##### 一、Python lambda() 函数
 
@@ -669,7 +669,7 @@ print(reduce(lambda a,b:'{},{}'.format(a,b),[1,2,3,4,5,6,7,8,9]))
 
 另外，部分Python库函数也接收函数作为参数，例如gevent的spawn函数。此时，lambda函数也能够作为参数传入。
 
-#### split()函数
+#### split( )函数
 
 split()函数是Python字符串函数。split() 通过指定分隔符对字符串进行切片。如果指定了整型参数num，则仅分隔num + 1个子字符串（即分割num次）。使用split()函数将字符串分割后，返回的是一个列表，列表中存储着分割后的每个子串。
 
@@ -735,8 +735,11 @@ print(d)
 >>> s = "list&index&out&of&range"
 >>> s_l = s.split("&")
 >>> s_l.count("&")
+
 0
+
 >>> s_l
+
 ['list', 'index', 'out', 'of', 'range']
 ```
 
@@ -747,21 +750,343 @@ print(d)
 ```python
 >>> demo = "a, b, c, d"
 >>> demo.split("")
+
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 ValueError: empty separator
 ```
 
-#### set函数
+
+
+#### set( )函数
+
+**set()** 函数创建一个无序不重复元素集，可进行关系测试，删除重复数据，还可以计算交集、差集、并集等。基本功能包括关系测试和消除重复元素。集合对象还支持 union（联合），intersection（交），difference（差）和 sysmmetric difference（对称差集）等数学运算。
+
+语法：
+
+```python
+set(iterable)
+```
+
+参数：
+
+iterable - 必需。序列、集合或迭代器对象。
+
+```python
+a = set({1,2,3,4,5,6,7,5,4,6,2,1})
+print(a)
+```
+
+输出结果为：
+
+```python
+{1, 2, 3, 4, 5, 6, 7}
+```
+
+##### 一、构造集合
+
+可以使用大括号 **{ }** 或者 **set()** 函数创建集合，注意：创建一个空集合必须用 **set()** 而不是 **{ }**，因为 **{ }** 是用来创建一个空字典。
+
+1、使用大括号`{}`
+
+```python
+basket = {'apple', 'orange', 'apple', 'pear', 'orange', 'banana'}
 
 
 
-#### isdigit()函数
+print(basket)  # {'apple', 'orange', 'banana', 'pear'}
+```
+
+当使用`print()函数`打印输出时，会自动**将集合中重复的元素去除**，且每次打印**返回的顺序并不和初始的一致**。
+
+ 2、使用`set()`函数
+
+```python
+fruit = set(("apple", "banana", "cherry"))  # 请留意这个双括号
 
 
 
-#### eval(x)函数
+print(fruit)  # {'banana', 'apple', 'cherry'}
+```
+
+在使用`set()函数`创建集合时，一定要注意**双括号**。
+
+##### 二、向 set 集合中添加元素
+
+set 集合中添加元素，可以使用 set 类型提供的 add() 方法实现，该方法的语法格式为：
+
+```python
+setname.add(element)
+```
+
+其中，`setname `表示要添加元素的集合，`element` 表示要添加的元素内容。
+
+需要注意的是，使用 add() 方法添加的元素，只能是数字、字符串、元组或者布尔类型（True 和 False）值，不能添加列表、字典、集合这类可变的数据，否则 Python 解释器会报 TypeError 错误。例如：
+
+```python
+a = {1,2,3}a.add((1,2))print(a)a.add([1,2])print(a)
+```
+
+运行结果为：
+
+```python
+{(1, 2), 1, 2, 3}
+Traceback (most recent call last):
+ File "C:\Users\mengma\Desktop\1.py", line 4, in <module>
+  a.add([1,2])
+TypeError: unhashable type: 'list'
+```
+
+##### 三、从set集合中删除元素
+
+删除现有 set 集合中的指定元素，可以使用 remove() 方法，该方法的语法格式如下：
+
+```python
+setname.remove(element)
+```
+
+使用此方法删除集合中元素，需要注意的是，如果被删除元素本就不包含在集合中，则此方法会抛出 KeyError 错误，例如：
+
+```python
+a = {1,2,3}
+a.remove(1)
+print(a)
+a.remove(1)
+print(a)
+```
+
+运行结果为：
+
+```python
+{2, 3}
+Traceback (most recent call last):
+ File "C:\Users\mengma\Desktop\1.py", line 4, in <module>
+  a.remove(1)
+KeyError: 1
+```
+
+上面程序中，由于集合中的元素 1 已被删除，因此当再次尝试使用 remove() 方法删除时，会引发 KeyError 错误。
+
+如果我们不想在删除失败时令解释器提示 KeyError 错误，还可以使用 discard() 方法，此方法和 remove() 方法的用法完全相同，唯一的区别就是，当删除集合中元素失败时，此方法不会抛出任何错误。
+
+例如：
+
+```python
+a = {1,2,3}a.remove(1)print(a)a.discard(1)print(a)
+```
+
+运行结果为：
+
+```python
+{2, 3}
+{2, 3}
+```
+
+##### 四、清空set集合中的所有元素
+
+清空set 集合中所有的元素，可以使用 clear() 方法，该方法的语法格式如下：
+
+```python
+setname.clear(element)
+```
+
+使用此方法清空集合中元素，需要注意的是，set()才表示空集合，{}表示的是空字典：
+
+```python
+set1 = {1,2,3}
+set1.clear()
+print（set1）
+```
+
+运行结果为：
+
+```python
+set()
+```
+
+##### 五、拷贝set集合中的元素
+
+拷贝set 集合中所有的元素，可以使用 capy() 方法，该方法的语法格式如下：
+
+```python
+setname2 = .setname1.copy(element)
+```
+
+使用此方法拷贝集合中元素是，拷贝 set1 集合给 set2:
+
+```python
+set1 = {1,2,3}
+set2 = set1.copy()
+print(set1)
+set1.add(4)
+print(set1)
+print(set2)
+```
+
+运行结果为：
+
+```python
+{1, 2, 3}
+{1, 2, 3, 4}
+{1, 2, 3}
+```
+
+**注意：**详见
+
+[Python set集合方法详解（全） (biancheng.net)](http://c.biancheng.net/view/4402.html)
+
+[Python的set集合详解 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/98994486)
+
+[【python】集合set详解（超详细）_python set 集合-CSDN博客](https://blog.csdn.net/devil_son1234/article/details/128930682)
+
+```python
+>>> x = set('eleven')
+>>> y = set('twelve')
+>>> x,y
+({'l', 'e', 'n', 'v'}, {'e', 'v', 'l', 't', 'w'})
+>>> x & y  #交集
+{'l', 'e', 'v'}
+>>> x | y  #并集
+{'e', 'v', 'n', 'l', 't', 'w'}
+>>> x - y  #差集
+{'n'}
+>>> y -x   #差集
+{'t', 'w'}
+>>> x ^ y  #补集
+{'t', 'n', 'w'}
+>>> y ^ x  #补集
+{'w', 'n', 't'}
+```
+
+**交集 &** : **x&y**，返回一个新的集合，包括同时在集合 x 和y中的共同元素。
+
+**并集 |** : **x|y**，返回一个新的集合，包括集合 x 和 y 中所有元素。
+
+**差集 -** : **x-y**，返回一个新的集合,包括在集合 x 中但不在集合 y 中的元素。
+
+**补集 ^** : **x^y**，返回一个新的集合，包括集合 x 和 y 的非共同元素。
 
 
 
-#### format(x)函数
+##### 六、创建空集合
+
+```python
+>>> s=set()
+>>> s
+set()
+>>> s1=set([])　＃列表
+>>> s1
+set()
+>>> s2=set(())　＃元组
+>>> s2
+set()
+>>> s3=set({})　＃字典
+>>> s3
+set()
+```
+
+**注意：**想要创建空集合，你必须使用 set() 而不是 {}。后者用于创建空字典，我们在后面介绍的一种数据结构。
+
+##### 七、创建非空集合
+
+　即列表，元组，字典不在是空值，举两个例子
+
+```text
+>>> s1=set([1,2,3,4])
+>>> s1
+{1, 2, 3, 4}
+　　
+>>> s3=set({'a':2,'b':3,'c':4})
+>>> s3
+{'c', 'a', 'b'}
+```
+
+　　注：字典转set集合，需要注意的是，只取了字典的key，相当于将字典中的dict.keys()列表转成set集合。
+
+#### isdigit( )函数
+
+##### 描述
+
+Python isdigit() 方法检测字符串是否只由数字组成，只对 0 和 正数有效。
+
+##### 语法
+
+isdigit()方法语法：
+
+```python
+str.isdigit()
+```
+
+##### 参数
+
+- 无。
+
+##### 返回值
+
+如果字符串只包含数字则返回 True 否则返回 False。
+
+##### 实例
+
+```python
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+ 
+str = "123456"  # 字符串只包含数字
+print (str.isdigit())
+ 
+str = "this is string example....wow!!!"
+print (str.isdigit())
+ 
+str = "0"
+print (str.isdigit())
+ 
+str = "-1"
+print (str.isdigit())
+```
+
+**注意：**isdigit() 方法只对正整数有效，负数及小数均返回不正确。
+
+可以使用以下函数来解决：
+
+```python
+# 判断是否为数字
+def is_number(s):    
+    try:    # 如果能运⾏ float(s) 语句，返回 True（字符串 s 是浮点数）        
+        float(s)        
+        return True    
+    except ValueError:  # ValueError 为 Python 的⼀种标准异常，表⽰"传⼊⽆效的参数"        
+        pass  # 如果引发了 ValueError 这种异常，不做任何事情（pass：不做任何事情，⼀般⽤做占位语句）    
+    try:        
+        import unicodedata  # 处理 ASCII 码的包        
+        unicodedata.numeric(s)  # 把⼀个表⽰数字的字符串转换为浮点数返回的函数        
+        return True    
+    except (TypeError, ValueError):        
+        pass    
+        return False
+
+print(is_number(1))
+print(is_number(1.0))
+print(is_number(0))
+print(is_number(-2))
+print(is_number(-2.0))
+print(is_number("abc"))
+```
+
+输出结果为：
+
+```python
+True
+True
+True
+True
+True
+False
+```
+
+
+
+#### eval( )函数
+
+
+
+#### format( )函数
